@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "name": "fgv.ph",
+  "alias": "fgvph.now.sh",
+  "builds": [
+    { "src": "www/package.json", "use": "@now/next" },
+    { "src": "api/**/*.js", "use": "@now/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1", "headers": { "Access-Control-Allow-Origin": "*" } },
+    { "src": "/(.*)", "dest": "/www/$1" }
+  ]
+}
