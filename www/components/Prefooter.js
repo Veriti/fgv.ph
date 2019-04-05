@@ -53,8 +53,8 @@ export default () => {
           <Title>
             <span>Industries</span>
           </Title>
-          { industries.map(tag => (
-            <Tag>{tag}</Tag>
+          { industries.map((tag, i) => (
+            <Tag key={i}>{tag}</Tag>
           )) }
         </Column>
       </Row>

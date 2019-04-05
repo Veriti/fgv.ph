@@ -28,7 +28,7 @@ const categories = [
     "thumbnail": "/static/images/media-category-5.jpg"
   },
   {
-    "id": 7,
+    "id": 6,
     "slug": "sanitary-pipes",
     "title": "Sanitary Pipes",
     "description": "Water, is an essential resource. Therefore, storage of clean, potable water for extended period remains a top priority.",

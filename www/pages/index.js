@@ -29,8 +29,12 @@ const Index = ({ categories }) => {
   );
 };
 
-Index.getInitialProps = async () => {
-  const response = await fetch('http://localhost:3000/api/categories');
+Index.getInitialProps = async ctx => {
+  const { req: { headers: { host, referer } } } = ctx;
+  const dev = process.env.NODE_ENV === "development";
+  const apiURL = dev ? `http://localhost:3000/api` : `http://${host}/api`;
+
+  const response = await fetch(`${apiURL}/categories`);
   const categories = await response.json();
 
   return { categories }

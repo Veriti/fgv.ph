@@ -1,3 +1,3 @@
-module.exports = {
+module.exports = (phase) => ({
   target: 'serverless'
-}
+})
