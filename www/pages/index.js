@@ -29,18 +29,6 @@ const Index = props => {
   );
 };
 
-Index.getInitialProps = async ({ req }) => {
-  const apiURL = process.env.API_URL ? process.env.API_URL : `http://localhost:3000/api`
-
-  const responseFields = await fetch(`${apiURL}/fields`);
-  const fields = await responseFields.json();
-
-  const responseIndustries = await fetch(`${apiURL}/industries`);
-  const industries = await responseIndustries.json();
-
-  return { fields, industries };
-};
-
 export default Index;
 
 const MainWrap = ({ children }) => {

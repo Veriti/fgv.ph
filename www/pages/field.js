@@ -31,21 +31,6 @@ const Page = (props) => {
   );
 };
 
-Page.getInitialProps = async ({ req }) => {
-  const apiURL = process.env.API_URL ? process.env.API_URL : `http://localhost:3000/api`
-
-  const responseProducts = await fetch(`${apiURL}/products`);
-  const products = await responseProducts.json();
-
-  const responseFields = await fetch(`${apiURL}/fields`);
-  const fields = await responseFields.json();
-
-  const responseIndustries = await fetch(`${apiURL}/industries`);
-  const industries = await responseIndustries.json();
-
-  return { fields, industries, products }
-}
-
 export default Page;
 
 const MainWrap = ({ children }) => {
