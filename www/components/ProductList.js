@@ -36,7 +36,7 @@ const CatProduct = ({ product }) => {
       <ProductBody dangerouslySetInnerHTML={{ __html: product.excerpt }} />
       <ProductFooter>
         <Link
-          href={`/page?field=${product.category}&product=${product.slug}`}
+          href={`/product?id=${product.slug}`}
           passHref
         >
           <ButtonText>View More</ButtonText>

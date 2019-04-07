@@ -7,8 +7,9 @@
     { "src": "api/**/*.js", "use": "@now/node" }
   ],
   "routes": [
-    { "src": "/field/(?<id>[^/]+)", "dest": "/www/field?field_id=$id" },
     { "src": "/api/(.*)", "dest": "/api/$1", "headers": { "Access-Control-Allow-Origin": "*" } },
-    { "src": "/(.*)", "dest": "/www/$1" }
+    { "src": "/static/(.*)", "dest": "www/static/$1" },
+    { "src": "/(?<id>[^/]+)", "dest": "/www/field?field_id=$id" },
+    { "src": "/", "dest": "/www/" }
   ]
 }

@@ -1,7 +1,15 @@
-import React from "react";
-import App, { Container } from "next/app";
+import React, { useContext } from "react";
+import NextApp, { Container } from "next/app";
+import { css } from "@emotion/core";
+import styled from "@emotion/styled";
+import App, { AppContext } from "../components/App";
+import Header from "../components/Header";
+import Navigation from "../components/Navigation";
+import Prefooter from "../components/Prefooter";
+import Footer from "../components/Footer";
+import fetch from "isomorphic-unfetch";
 
-export default class extends App {
+export default class extends NextApp {
   static async getInitialProps({ Component, ctx }) {
     const { req } = ctx;
     const dev = process.env.NODE_ENV === "development";
@@ -43,8 +51,36 @@ export default class extends App {
 
     return (
       <Container>
-        <Component {...apiData} {...pageProps} />
+        <App>
+          <Navigation />
+          <MainWrap hasMenu={true}>
+            <Header />
+            <Component {...apiData} {...pageProps} />
+            <Prefooter {...apiData} {...pageProps} />
+            <Footer />
+          </MainWrap>
+        </App>
       </Container>
     );
   }
 }
+
+const MainWrap = ({ children }) => {
+  const { menu } = useContext(AppContext);
+  return <Main hasMenu={menu}>{children}</Main>;
+};
+
+const MainWrap_Docked = css`
+  transform: translateX(calc(-100% + 70px));
+
+  @media (min-width: 768px) {
+    transform: translateX(0);
+  }
+`;
+const Main = styled.div`
+  transition: transform 0.4s;
+  overflow: auto;
+  position: relative;
+
+  ${p => (p.hasMenu ? MainWrap_Docked : null)};
+`;

@@ -33,6 +33,7 @@ export default ({ fields }) => {
                 <CardFooter>
                   <ButtonSet>
                     <Link
+                      as={`/${cat.slug}`}
                       href={`/field?field_id=${cat.slug}`}
                       passHref
                     >
