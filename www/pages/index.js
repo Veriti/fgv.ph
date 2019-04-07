@@ -30,10 +30,7 @@ const Index = props => {
 };
 
 Index.getInitialProps = async ({ req }) => {
-  const host = req ? req.headers.host : window.location.host
-  const protocol = window ? window.location.protocol : `http:`
-  const dev = process.env.NODE_ENV === "development";
-  const apiURL = dev ? `http://localhost:3000/api` : `${protocol}//${host}/api`;
+  const apiURL = process.env.API_URL ? process.env.API_URL : `http://localhost:3000/api`
 
   const responseFields = await fetch(`${apiURL}/fields`);
   const fields = await responseFields.json();
@@ -41,19 +38,15 @@ Index.getInitialProps = async ({ req }) => {
   const responseIndustries = await fetch(`${apiURL}/industries`);
   const industries = await responseIndustries.json();
 
-  return { fields, industries }
-}
+  return { fields, industries };
+};
 
 export default Index;
 
 const MainWrap = ({ children }) => {
   const { menu } = useContext(AppContext);
-  return (
-    <Main hasMenu={menu}>
-      {children}
-    </Main>
-  );
-}
+  return <Main hasMenu={menu}>{children}</Main>;
+};
 
 const MainWrap_Docked = css`
   transform: translateX(calc(-100% + 70px));
@@ -61,11 +54,11 @@ const MainWrap_Docked = css`
   @media (min-width: 768px) {
     transform: translateX(0);
   }
-`
+`;
 const Main = styled.div`
   transition: transform 0.4s;
   overflow: auto;
   position: relative;
 
-  ${p => p.hasMenu ? MainWrap_Docked : null}
-`
+  ${p => (p.hasMenu ? MainWrap_Docked : null)};
+`;

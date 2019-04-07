@@ -32,9 +32,7 @@ const Page = (props) => {
 };
 
 Page.getInitialProps = async ({ req }) => {
-  const host = req ? req.headers.host : window.location.host
-  const dev = process.env.NODE_ENV === "development";
-  const apiURL = dev ? `http://localhost:3000/api` : `//${host}/api`;
+  const apiURL = process.env.API_URL ? process.env.API_URL : `http://localhost:3000/api`
 
   const responseProducts = await fetch(`${apiURL}/products`);
   const products = await responseProducts.json();
