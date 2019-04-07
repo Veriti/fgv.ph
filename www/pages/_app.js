@@ -1,14 +1,25 @@
 import React from "react";
 import App, { Container } from "next/app";
 
-class MyApp extends App {
+export default class extends App {
   static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-    let apiData = {};
+    const { req } = ctx;
+    const dev = process.env.NODE_ENV === "development";
 
-    const apiURL = process.env.API_URL
-      ? process.env.API_URL
-      : `http://localhost:3000/api`;
+    let apiData = {};
+    let protocol = `http:`;
+    let host = `localhost:3000`;
+
+    if (req) {
+      protocol = req.headers["x-forwarded-proto"] 
+        ? `${req.headers['x-forwarded-proto']}:`
+        : `http:`;
+      host = req.headers["x-now-deployment-url"] 
+        ? req.headers["x-now-deployment-url"] 
+        : `localhost:3000`;
+    }
+
+    const apiURL = `${protocol}//${host}/api`;
 
     const responseProducts = await fetch(`${apiURL}/products`);
     apiData.products = await responseProducts.json();
@@ -20,8 +31,8 @@ class MyApp extends App {
     apiData.industries = await responseIndustries.json();
 
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-      return { apiData, pageProps }
+      const pageProps = await Component.getInitialProps(ctx);
+      return { apiData, pageProps };
     }
 
     return { apiData };
@@ -37,5 +48,3 @@ class MyApp extends App {
     );
   }
 }
-
-export default MyApp;
