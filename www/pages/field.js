@@ -6,22 +6,24 @@ import Head from "../components/Head";
 import App, { AppContext } from "../components/App";
 import Header from "../components/Header";
 import Navigation from "../components/Navigation";
-import Hero from "../components/Hero";
-import FieldsList from "../components/FieldsList";
-import Commitment from "../components/Commitment";
 import Prefooter from "../components/Prefooter";
 import Footer from "../components/Footer";
+import Breadcrumbs from "../components/Breadcrumbs";
+import PageHeader from "../components/PageHeader";
+import ProductList from "../components/ProductList";
+import Badges from "../components/Badges";
 
-const Index = props => {
+const Page = (props) => {
   return (
     <App>
       <Navigation />
       <MainWrap hasMenu={true}>
         <Head title="FGV" />
         <Header />
-        <Hero />
-        <FieldsList {...props} />
-        <Commitment />
+        <Breadcrumbs {...props} />
+        <PageHeader {...props} />
+        <ProductList {...props} />
+        <Badges {...props} />
         <Prefooter {...props} />
         <Footer />
       </MainWrap>
@@ -29,11 +31,13 @@ const Index = props => {
   );
 };
 
-Index.getInitialProps = async ({ req }) => {
+Page.getInitialProps = async ({ req }) => {
   const host = req ? req.headers.host : window.location.host
-  const protocol = window ? window.location.protocol : `http:`
   const dev = process.env.NODE_ENV === "development";
-  const apiURL = dev ? `http://localhost:3000/api` : `${protocol}//${host}/api`;
+  const apiURL = dev ? `http://localhost:3000/api` : `//${host}/api`;
+
+  const responseProducts = await fetch(`${apiURL}/products`);
+  const products = await responseProducts.json();
 
   const responseFields = await fetch(`${apiURL}/fields`);
   const fields = await responseFields.json();
@@ -41,10 +45,10 @@ Index.getInitialProps = async ({ req }) => {
   const responseIndustries = await fetch(`${apiURL}/industries`);
   const industries = await responseIndustries.json();
 
-  return { fields, industries }
+  return { fields, industries, products }
 }
 
-export default Index;
+export default Page;
 
 const MainWrap = ({ children }) => {
   const { menu } = useContext(AppContext);

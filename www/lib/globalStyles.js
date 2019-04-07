@@ -33,4 +33,7 @@ body {
 p {
   line-height: 1.3;
 }
+strong {
+  font-weight: bold;
+}
 `

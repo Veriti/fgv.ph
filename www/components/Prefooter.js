@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Section, Container, Field, Input, TextArea, Button } from "./Shared";
 import * as UIIcon from "./ui";
 
-export default () => {
+export default ({ industries }) => {
   return (
     <Prefooter>
       <Row>
@@ -53,16 +53,14 @@ export default () => {
           <Title>
             <span>Industries</span>
           </Title>
-          { industries.map((tag, i) => (
-            <Tag key={i}>{tag}</Tag>
+          { industries.map(tag => (
+            <Tag key={tag.id}>{tag.title}</Tag>
           )) }
         </Column>
       </Row>
     </Prefooter>
   )
 }
-
-const industries = [ "Plumbing", "Fire Protection", "Stormwater System", "GRP Tanks", "Drainage System", "Valves" ];
 
 const Prefooter = styled(Section)`
   background: #cecece;
@@ -81,6 +79,8 @@ const Row = styled(Container)`
   }
 `
 const Column = styled.div`
+  margin: 40px 0;
+
   @media(min-width: 768px) {
     flex-basis: 35%;
     margin: 0 20px;

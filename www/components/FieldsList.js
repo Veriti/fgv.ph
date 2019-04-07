@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 import { css } from "@emotion/core";
 import { Section, Container, SectionHeader } from "./Shared";
 import { AppContext } from "./App";
 
-export default ({ data }) => {
+export default ({ fields }) => {
   const { theme } = useContext(AppContext);
 
   return (
@@ -21,7 +22,7 @@ export default ({ data }) => {
           </p>
         </SectionHeader>
         <Cards>
-          {data.map(cat => {
+          {fields.map(cat => {
             return (
               <Card key={cat.id}>
                 <CardHeader>
@@ -31,9 +32,12 @@ export default ({ data }) => {
                 <CardBody>{cat.description}</CardBody>
                 <CardFooter>
                   <ButtonSet>
-                    <TextButton href={`subject/${cat.slug}`} theme={theme}>
-                      View Recommendations
-                    </TextButton>
+                    <Link
+                      href={`/field?field_id=${cat.slug}`}
+                      passHref
+                    >
+                      <ButtonText>View Recommendations</ButtonText>
+                    </Link>
                   </ButtonSet>
                 </CardFooter>
               </Card>
@@ -52,7 +56,7 @@ const SectionLight = styled(Section)`
 
   @media (min-width: 768px) {
     padding-bottom: 40px;
-  } 
+  }
 `;
 const CardStyles = css`
   margin-bottom: 20px;
@@ -135,6 +139,15 @@ const ButtonSet = styled.div`
   align-items: center;
   margin: 16px 0;
 `;
+const ButtonText = ({ children, ...props }) => {
+  const { theme } = useContext(AppContext);
+
+  return (
+    <TextButton theme={theme} {...props}>
+      {children}
+    </TextButton>
+  );
+};
 const TextButton = styled.a`
   text-decoration: none;
   font-weight: bold;

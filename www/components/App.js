@@ -4,7 +4,6 @@ export const AppContext = React.createContext();
 
 export default ({ children }) => {
   const [menu, setMenu] = useState();
-  
 
   return (
     <AppContext.Provider value={{

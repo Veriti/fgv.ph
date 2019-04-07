@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import styled from "@emotion/styled";
+import Link from "next/link";
 import { AppContext } from "./App";
 import { Container } from "./Shared";
 import Brand from "./ui/Brand";
@@ -11,9 +12,11 @@ export default () => {
   return (
     <Header>
       <HeaderContainer>
-        <Logo>
-          <Brand />
-        </Logo>
+        <Link href="/" passHref>
+          <Logo>
+            <Brand />
+          </Logo>
+        </Link>
         <Phone theme={theme} href="tel:023425144">
           <PhoneIcon />
           <PhoneText>(+02) 342-5144</PhoneText>
@@ -26,7 +29,7 @@ export default () => {
   );
 };
 
-const Logo = styled.div`
+const Logo = styled.a`
   margin-right: auto;
 `;
 const Header = styled.div`
